@@ -1,4 +1,4 @@
-import {Schema, Document, model, HookNextFunction} from 'mongoose'
+import {Schema, Document, model} from 'mongoose'
 import bcrypt from 'bcrypt'
 import config from 'config'
 
@@ -9,6 +9,7 @@ export interface UserDocument extends Document{
     password: string,
     createdAt: Date,
     updatedAt: Date
+    comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const userSchema = new Schema(
@@ -23,15 +24,26 @@ const userSchema = new Schema(
 );
 
 // presave method
-userSchema.pre('save', async (next: HookNextFunction)=>{
-    let user = this as UserDocument
+userSchema.pre('save', async (next)=>{
+    let user = this as unknown as UserDocument
 
     if(!user.isModified('password')){
         return next()
     }
 
-    const salt = await bcrypt.genSalt(config.get('saltWorkFactor'))
+    const salt = await bcrypt.genSalt(config.get<number>('saltWorkFactor'))
+    const hash = await bcrypt.hashSync(user.password, salt)
+    user.password = hash;
+
+    return next();
 })
+
+// compare password 
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+    const user = this as unknown as UserDocument;
+
+    return bcrypt.compare(candidatePassword, user.password).catch((e) => false)
+}
 
 const UserModel = model('User', userSchema)
 
