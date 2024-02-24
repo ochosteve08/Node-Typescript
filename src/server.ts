@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import router from "./router";
 
 
 const port = 3500;
@@ -13,6 +14,7 @@ mongoose.connection.on('error', (error: Error) =>{
 console.log(error)
 })
 
+app.use('',router)
 app.get("/", (req: Request, res: Response) => {
   console.log(req.method)
   res.status(200).send("Welcome to Nodejs Typescript  ");
