@@ -209,6 +209,41 @@
                     }
                 }
             }
+           
+        },
+        "/user/{user_id}":{
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a user",
+                "description": "Delete a user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Action authorized successfully."
+                    },
+                    "400": {
+                        "description": "Bad request. Please check the request parameters."
+                    },
+                    "401": {
+                        "description": "Unauthorized. Token is invalid or action is not permitted."
+                    },
+                    "500": {
+                        "description": "Internal server error."
+                    }
+                }
+            }
         }
     },
     "components": {

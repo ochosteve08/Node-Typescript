@@ -14,7 +14,7 @@ export const isAuthenticated = async (
       return res.status(403);
     }
     const existingUser = await getUserBySessionToken(sessionToken);
-  
+  console.log(existingUser)
     if (!existingUser) {
       return res.status(403);
     }
