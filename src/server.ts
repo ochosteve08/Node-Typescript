@@ -6,7 +6,6 @@ import swaggerJson from "./doc/swagger.json";
 import cookieParser from "cookie-parser";
 
 const port = 3500;
-
 const app = express();
 const mongo_url = "mongodb://127.0.0.1:27017/node-ts";
 
@@ -25,7 +24,7 @@ app.get("/docs.json", (req: Request, res: Response) => {
 });
 app.use("/", router);
 app.get("/", (req: Request, res: Response) => {
-  console.log(req.method);
+  
   res.status(200).send("Welcome to Nodejs Typescript  ");
 });
 
