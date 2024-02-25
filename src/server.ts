@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import router from "./router";
 import swaggerUi from "swagger-ui-express";
 import swaggerJson from "./doc/swagger.json";
+import cookieParser from "cookie-parser";
 
 const port = 3500;
 
@@ -16,6 +17,7 @@ mongoose.connection.on("error", (error: Error) => {
 });
 
 app.use(express.json());
+app.use(cookieParser());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJson));
 app.get("/docs.json", (req: Request, res: Response) => {
   res.setHeader("Content-Type", "application/json");

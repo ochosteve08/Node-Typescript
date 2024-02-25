@@ -19,7 +19,7 @@
         "/auth/register": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "Register a new user",
                 "description": "Endpoint to register a new user",
@@ -77,7 +77,7 @@
         "/auth/login": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "Login a user",
                 "description": "Endpoint to login a user",
@@ -117,6 +117,14 @@
                                             "$ref": "#/components/schemas/User"
                                         }
                                     }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "set-Cookie": {
+                                "description": "session cookie",
+                                "schema": {
+                                    "type": "string"
                                 }
                             }
                         }
@@ -176,7 +184,7 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "todo": {
+                                        "user": {
                                             "type": "array",
                                             "items": {
                                                 "$ref": "#/components/schemas/User"
