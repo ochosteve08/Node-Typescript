@@ -74,7 +74,7 @@
                 }
             }
         },
-        "/login": {
+        "/auth/login": {
             "post": {
                 "tags": [
                     "User"
@@ -115,10 +115,6 @@
                                     "properties": {
                                         "user": {
                                             "$ref": "#/components/schemas/User"
-                                        },
-                                        "token": {
-                                            "type": "string",
-                                            "description": "Authentication token"
                                         }
                                     }
                                 }

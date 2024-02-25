@@ -15,8 +15,8 @@ export const updateUser = (id: string, values: Record<string, any>) =>
   userModel.findByIdAndUpdate(id, values, { new: true });
 
 export const userRegistration = async (
-  email: string,
   username: string,
+  email: string,
   password: string
 ) => {
   const existingUser = await getUserByEmail(email);
@@ -24,6 +24,7 @@ export const userRegistration = async (
     throw new Error("user already exists");
   }
   const salt = random();
+
   const user = await createUser({
     email,
     username,
@@ -32,5 +33,33 @@ export const userRegistration = async (
       password: authentication(salt, password),
     },
   });
+  console.log(user);
   return user;
+};
+
+export const userLogin = async (email: string, password: string) => {
+  const existingUser = await getUserByEmail(email).select(
+    "+authentication.salt +authentication.password"
+  );
+  if (!existingUser) {
+    throw new Error("user not found");
+  }
+  if (!existingUser?.authentication?.salt) {
+    throw new Error("User authentication data is missing.");
+  }
+
+  const authenticateHash = authentication(
+    existingUser.authentication.salt,
+    password
+  );
+  if (existingUser.authentication.password !== authenticateHash) {
+    throw new Error("incorrect password");
+  }
+  const salt = random();
+  existingUser.authentication.sessionToken = authentication(
+    salt,
+    existingUser._id.toString()
+  );
+  await existingUser.save();
+  return existingUser;
 };
