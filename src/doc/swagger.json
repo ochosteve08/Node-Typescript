@@ -138,6 +138,23 @@
                 }
             }
         },
+        "/auth/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout the user out of the application",
+                "description": "Endpoint to login a user",
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "tags": [
