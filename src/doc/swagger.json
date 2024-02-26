@@ -19,7 +19,7 @@
         "/auth/register": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "Register a new user",
                 "description": "Endpoint to register a new user",
@@ -77,7 +77,7 @@
         "/auth/login": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "Login a user",
                 "description": "Endpoint to login a user",
@@ -119,6 +119,14 @@
                                     }
                                 }
                             }
+                        },
+                        "headers": {
+                            "set-Cookie": {
+                                "description": "session cookie",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     },
                     "401": {
@@ -126,6 +134,78 @@
                     },
                     "404": {
                         "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Retrieve all users",
+                "description": "fetch all users",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of results to show (default is 20)",
+                        "schema": {
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "current page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "title",
+                        "type": "string",
+                        "description": "Search title string."
+                    },
+                    {
+                        "in": "query",
+                        "name": "description",
+                        "type": "string",
+                        "description": "Search description string."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of all users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        },
+                                        "totalPages": {
+                                            "type": "integer"
+                                        },
+                                        "limit": {
+                                            "type": "integer"
+                                        },
+                                        "currentPage": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

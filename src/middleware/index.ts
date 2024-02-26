@@ -8,11 +8,13 @@ export const isAuthenticated = async (
   next: NextFunction
 ) => {
   try {
-    const sessionToken = req.cookies("steve-auth");
+    const sessionToken = req.cookies["steve-auth"];
+    
     if (!sessionToken) {
       return res.status(403);
     }
     const existingUser = await getUserBySessionToken(sessionToken);
+  
     if (!existingUser) {
       return res.status(403);
     }
