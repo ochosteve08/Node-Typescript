@@ -37,6 +37,7 @@ export const LoginUser = async (req: Request, res: Response) => {
       domain: "localhost",
       path: "/",
       httpOnly: true,
+      maxAge: 10 * 60 * 1000,
     });
     return res.status(200).json(user);
   } catch (error) {
