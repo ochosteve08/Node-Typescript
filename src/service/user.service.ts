@@ -4,15 +4,19 @@ import { authentication, random } from "../utils/encrypt";
 export const getUsers = () => userModel.find();
 
 export const getUserByEmail = (email: string) => userModel.findOne({ email });
+
 export const getUserBySessionToken = (sessionToken: string) =>
   userModel.findOne({ "authentication.sessionToken": sessionToken });
+
 export const getUserById = (id: string) => userModel.findById(id);
+
 export const createUser = (values: Record<string, any>) =>
   new userModel(values).save().then((user) => user.toObject());
+
 export const deleteUser = (user_id: string) =>
   userModel.findByIdAndDelete({ _id: user_id });
 
-export const updateUser = (id: string, values: Record<string, any>) =>
+export const updateUserById = (id: string, values: Record<string, any>) =>
   userModel.findByIdAndUpdate(id, values, { new: true });
 
 export const userRegistration = async (
@@ -34,7 +38,7 @@ export const userRegistration = async (
       password: authentication(salt, password),
     },
   });
-  console.log(user);
+  
   return user;
 };
 
