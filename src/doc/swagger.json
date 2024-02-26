@@ -209,9 +209,8 @@
                     }
                 }
             }
-           
         },
-        "/user/{user_id}":{
+        "/user/{user_id}": {
             "delete": {
                 "tags": [
                     "User"
@@ -241,6 +240,46 @@
                     },
                     "500": {
                         "description": "Internal server error."
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a user info",
+                "description": "Endpoint to update user info",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "user successfully updated"
+                    },
+                    "404": {
+                        "description": "user not found"
                     }
                 }
             }

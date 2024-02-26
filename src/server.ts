@@ -4,6 +4,7 @@ import router from "./router";
 import swaggerUi from "swagger-ui-express";
 import swaggerJson from "./doc/swagger.json";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const port = 3500;
 const app = express();
@@ -15,6 +16,11 @@ mongoose.connection.on("error", (error: Error) => {
   console.log(error);
 });
 
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJson));
@@ -24,7 +30,6 @@ app.get("/docs.json", (req: Request, res: Response) => {
 });
 app.use("/", router);
 app.get("/", (req: Request, res: Response) => {
-  
   res.status(200).send("Welcome to Nodejs Typescript  ");
 });
 

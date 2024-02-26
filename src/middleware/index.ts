@@ -9,9 +9,9 @@ export const isOwner = async (
 ) => {
   try {
     const { user_id } = req.params;
-    console.log("userId:", user_id);
+    
     const currentUserId = get(req, "identity._id") as unknown as string;
-    console.log("isOwner:", currentUserId.toString());
+   
     if (!currentUserId) {
       return res.status(403).json("forbidden");
     }
