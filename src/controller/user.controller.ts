@@ -8,8 +8,9 @@ import {
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
+    
     const users = await getUsers();
-
+    
     return res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -41,7 +42,7 @@ export const UpdateUser = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update user details
+   
     user.username = username;
     await user.save();
 

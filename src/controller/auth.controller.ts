@@ -24,7 +24,7 @@ export const RegisterUser = async (req: Request, res: Response) => {
 export const LoginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-   
+
     if (!email || !password) {
       return res.status(400).json("all fields are required");
     }
@@ -42,4 +42,14 @@ export const LoginUser = async (req: Request, res: Response) => {
     console.error(error);
     return res.sendStatus(400);
   }
+};
+
+export const Logout = (req: Request, res: Response) => {
+  const cookies = req.cookies;
+ 
+  if (!cookies?.['steve-auth']) return res.sendStatus(204); 
+  res.clearCookie("steve-auth", {
+    httpOnly: true,
+  });
+  res.json({ message: "Logged out successfully" });
 };

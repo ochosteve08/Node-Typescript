@@ -32,12 +32,12 @@ export const isAuthenticated = async (
     const sessionToken = req.cookies["steve-auth"];
 
     if (!sessionToken) {
-      return res.status(403);
+      return res.status(403).json('forbidden');
     }
     const existingUser = await getUserBySessionToken(sessionToken);
 
     if (!existingUser) {
-      return res.status(403);
+      return res.status(403).json('forbidden');
     }
     merge(req, { identity: existingUser });
     next();
